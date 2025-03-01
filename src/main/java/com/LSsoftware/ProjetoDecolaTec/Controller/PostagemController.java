@@ -45,6 +45,8 @@ public class PostagemController {
 	@ApiResponse(responseCode = "200", description = "Postagem excluida com sucesso")
 	@ApiResponse(responseCode = "422", description = "operação não permitida devido a campos nulos")
 	@ApiResponse(responseCode = "404", description = "operação não permitida entidade não encontrada")
+	@ApiResponse(responseCode = "400", description = "senha incorreta")
+
 	@DeleteMapping(value= "/{postagemId}")
 	public ResponseEntity<Void> excluirPostagem(@PathVariable Long postagemId, @RequestBody Long idUsuario, String senha) {
 		
@@ -67,17 +69,18 @@ public class PostagemController {
 	
 	@Operation(summary = "Rota de consulta paginada de paginada", description = "Rota usado para consultar postagemde forma paginada")
 	@ApiResponse(responseCode = "200", description = "consulta realizada com sucesso")
-	@GetMapping(value="/listar")
+	@GetMapping(value="/listar/{forumId}")
 	public ResponseEntity<Page<PostagemResponse>> listarPostagem(
 			@RequestParam(value = "pagina", defaultValue = "0") Integer pagina,
 			@RequestParam(value = "linhas", defaultValue = "10") Integer linhas,
 			@RequestParam(value = "ordarPor", defaultValue = "dataCriacao") String ordarPor,
-			@RequestParam(value = "ordem", defaultValue = "ASC") String ordem){
+			@RequestParam(value = "ordem", defaultValue = "ASC") String ordem,
+			@PathVariable Long forumId){
 		
 		PageRequest pagi = PageRequest.of(pagina, linhas, Direction.valueOf(ordem), ordarPor);
 	
 		
-		Page<PostagemResponse> resposta = postagemServi.listarPostagens(pagi);
+		Page<PostagemResponse> resposta = postagemServi.listarPostagens(forumId, pagi);
 		
 		return ResponseEntity.ok(resposta);
 		

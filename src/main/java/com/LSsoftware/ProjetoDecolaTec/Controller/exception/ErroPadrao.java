@@ -5,6 +5,7 @@ import java.time.Instant;
 
 public class ErroPadrao implements Serializable {
 	
+	private static final long serialVersionUID = 1L;
 	private Instant timestamp;
 	private Integer status;
 	private String message;

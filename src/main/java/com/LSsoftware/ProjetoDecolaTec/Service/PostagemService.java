@@ -1,9 +1,6 @@
 package com.LSsoftware.ProjetoDecolaTec.Service;
 
-import java.sql.Date;
-import java.text.SimpleDateFormat;
 import java.time.Instant;
-import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -107,8 +104,8 @@ public class PostagemService {
     }
 
     @Transactional(readOnly = true)
-    public Page<PostagemResponse> listarPostagens(PageRequest pageRequest) {
-        Page<Postagem> postagens = postagemRepository.findAll(pageRequest);
+    public Page<PostagemResponse> listarPostagens(Long forumId, PageRequest pageRequest) {
+        Page<Postagem> postagens = postagemRepository.findAllByForumId(forumId,pageRequest);
 
         return postagens.map(postagem -> new PostagemResponse(
                 postagem.getId(),
