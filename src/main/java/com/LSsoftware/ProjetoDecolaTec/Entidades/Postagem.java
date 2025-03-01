@@ -1,6 +1,8 @@
 package com.LSsoftware.ProjetoDecolaTec.Entidades;
 
 import java.sql.Date;
+import java.time.Instant;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -19,7 +21,7 @@ public class Postagem {
     private Long id;
 
     private String conteudo;
-    private Date dataCriacao;
+    private Instant dataCriacao;
 
     @ManyToOne
     @JoinColumn(name = "usuario_id")
@@ -34,9 +36,11 @@ public class Postagem {
 
 	public Postagem() {
 		super();
+		this.comentarios = new ArrayList<Comentario>();
+
 	}
 
-	public Postagem(Long id, String conteudo, Date dataCriacao, Usuario usuario, List<Comentario> comentarios,
+	public Postagem(Long id, String conteudo, Instant dataCriacao, Usuario usuario, List<Comentario> comentarios,
 			Forum forum) {
 		super();
 		this.id = id;
@@ -63,11 +67,11 @@ public class Postagem {
 		this.conteudo = conteudo;
 	}
 
-	public Date getDataCriacao() {
+	public Instant getDataCriacao() {
 		return dataCriacao;
 	}
 
-	public void setDataCriacao(Date dataCriacao) {
+	public void setDataCriacao(Instant dataCriacao) {
 		this.dataCriacao = dataCriacao;
 	}
 

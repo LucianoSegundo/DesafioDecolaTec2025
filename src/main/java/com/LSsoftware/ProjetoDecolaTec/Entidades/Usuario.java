@@ -1,16 +1,6 @@
 package com.LSsoftware.ProjetoDecolaTec.Entidades;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.OneToMany;
-
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -20,8 +10,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
-
-import jakarta.persistence.Entity;
 
 @Entity
 
@@ -44,6 +32,10 @@ public class Usuario {
 
 	public Usuario() {
 		super();
+		
+		this.comentarios = new ArrayList<Comentario>();
+		this.postagens = new ArrayList<Postagem>();
+
 	}
 
 	public Usuario(Long id, String nome, String email, String senha, Date dataNascimento, List<Postagem> postagens,
@@ -97,6 +89,9 @@ public class Usuario {
 	public void setPostagens(List<Postagem> postagens) {
 		this.postagens = postagens;
 	}
+	public void addPostagem(Postagem postagem) {
+		this.postagens.add(postagem);
+	}
 
 	public List<Comentario> getComentarios() {
 		return comentarios;
@@ -104,6 +99,9 @@ public class Usuario {
 
 	public void setComentarios(List<Comentario> comentarios) {
 		this.comentarios = comentarios;
+	}
+	public void addComentarios(Comentario comentario) {
+		this.comentarios.add(comentario);
 	}
 
 	@Override

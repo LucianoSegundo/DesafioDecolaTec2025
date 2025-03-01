@@ -70,7 +70,7 @@ public class UsuarioController {
 	@ApiResponse(responseCode = "404", description = "Usuario não encontrado")
 	@ApiResponse(responseCode = "400", description = "Senha incorreta.")
 	@DeleteMapping(value ="/{idUsuario}")
-	public ResponseEntity<Void> deletarUsuario(@PathVariable Long idUsuario,@RequestBody String Senha){
+	public ResponseEntity<Void> deletarUsuario(@PathVariable Long idUsuario, @RequestBody String Senha){
 	
 		useService.excluirUsuario(idUsuario, Senha);
 		

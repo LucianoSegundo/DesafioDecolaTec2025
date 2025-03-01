@@ -1,6 +1,6 @@
 package com.LSsoftware.ProjetoDecolaTec.Entidades;
 
-import java.util.Date;
+import java.time.Instant;
 import java.util.Objects;
 
 import jakarta.persistence.Entity;
@@ -17,7 +17,7 @@ public class Comentario {
     private Long id;
 
     private String conteudo;
-    private Date dataCriacao;
+    private Instant dataCriacao;
 
     @ManyToOne
     @JoinColumn(name = "usuario_id")
@@ -31,7 +31,7 @@ public class Comentario {
 		super();
 	}
 
-	public Comentario(Long id, String conteudo, Date dataCriacao, Usuario usuario, Postagem postagem) {
+	public Comentario(Long id, String conteudo, Instant dataCriacao, Usuario usuario, Postagem postagem) {
 		super();
 		this.id = id;
 		this.conteudo = conteudo;
@@ -56,11 +56,11 @@ public class Comentario {
 		this.conteudo = conteudo;
 	}
 
-	public Date getDataCriacao() {
+	public Instant getDataCriacao() {
 		return dataCriacao;
 	}
 
-	public void setDataCriacao(Date dataCriacao) {
+	public void setDataCriacao(Instant dataCriacao) {
 		this.dataCriacao = dataCriacao;
 	}
 

@@ -101,11 +101,14 @@ public class UsuarioService {
                 .orElseThrow(() -> new EntidadeNaoEncontradoException("ID " + idUsuario));
 
         //lembrar de comparar as senhas criptografadas quando adicionar o spring security
-        if (senha.equals( usuario.getSenha() )) {
+        if (usuario.getSenha().equals(senha) == true) {
             usuarioRepository.delete(usuario);
-
+            
         }
-        else throw new SenhaNaoCorrespondeException("Senha incoreta");
+        else {
+        	System.out.println("senha salva: |" + usuario.getSenha() + "| senha recebida: |"+ senha +"|");
+        	throw new SenhaNaoCorrespondeException("Senha incoreta");
+        } 
 
 
     }

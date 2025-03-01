@@ -64,6 +64,9 @@ public class Forum {
 	public void setPostagens(List<Postagem> postagens) {
 		this.postagens = postagens;
 	}
+	public void addPostagem(Postagem postagem) {
+		this.postagens.add(postagem);
+	}
 
 	@Override
 	public int hashCode() {
