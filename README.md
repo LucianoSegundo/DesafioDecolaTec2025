@@ -1,5 +1,7 @@
 # DesafioDecolaTec2025
 
+O projeto se trata de um forum simples, nele o usuário se cadastra, pode criar ou participar de um forum já existente, e fazer postagens nesse forum, e essas postagem podem ser comentadas por outros usuários;
+
 ```mermaid
 classDiagram
     class Usuario {
