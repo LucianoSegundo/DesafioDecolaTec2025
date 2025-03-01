@@ -34,7 +34,8 @@ public class Usuario {
     private String nome;
     private String email;
     private Date dataNascimento;
-
+    private String senha;
+    
     @OneToMany(mappedBy = "usuario")
     private List<Postagem> postagens;
 
@@ -45,12 +46,13 @@ public class Usuario {
 		super();
 	}
 
-	public Usuario(Long id, String nome, String email, Date dataNascimento, List<Postagem> postagens,
+	public Usuario(Long id, String nome, String email, String senha, Date dataNascimento, List<Postagem> postagens,
 			List<Comentario> comentarios) {
 		super();
 		this.id = id;
 		this.nome = nome;
 		this.email = email;
+		this.senha = senha;
 		this.dataNascimento = dataNascimento;
 		this.postagens = postagens;
 		this.comentarios = comentarios;
@@ -106,7 +108,7 @@ public class Usuario {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(dataNascimento, email, id, nome);
+		return Objects.hash(dataNascimento, email, id, nome, senha);
 	}
 
 	@Override
@@ -119,7 +121,15 @@ public class Usuario {
 			return false;
 		Usuario other = (Usuario) obj;
 		return Objects.equals(dataNascimento, other.dataNascimento) && Objects.equals(email, other.email)
-				&& Objects.equals(id, other.id) && Objects.equals(nome, other.nome);
+				&& Objects.equals(id, other.id) && Objects.equals(nome, other.nome)&& Objects.equals(senha, other.senha);
+	}
+
+	public String getSenha() {
+		return senha;
+	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
 	}
 
    
