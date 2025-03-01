@@ -15,7 +15,7 @@ public class Forum {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String titulo;
+    private String nome;
     private String descricao;
 
     @OneToMany(mappedBy = "forum")
@@ -28,7 +28,7 @@ public class Forum {
 	public Forum(Long id, String titulo, String descricao, List<Postagem> postagens) {
 		super();
 		this.id = id;
-		this.titulo = titulo;
+		this.nome = titulo;
 		this.descricao = descricao;
 		this.postagens = postagens;
 	}
@@ -41,12 +41,12 @@ public class Forum {
 		this.id = id;
 	}
 
-	public String getTitulo() {
-		return titulo;
+	public String getNome() {
+		return nome;
 	}
 
-	public void setTitulo(String titulo) {
-		this.titulo = titulo;
+	public void setNome(String nome) {
+		this.nome = nome;
 	}
 
 	public String getDescricao() {
@@ -67,7 +67,7 @@ public class Forum {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(descricao, id, titulo);
+		return Objects.hash(descricao, id, nome);
 	}
 
 	@Override
@@ -80,7 +80,7 @@ public class Forum {
 			return false;
 		Forum other = (Forum) obj;
 		return Objects.equals(descricao, other.descricao) && Objects.equals(id, other.id)
-				&& Objects.equals(titulo, other.titulo);
+				&& Objects.equals(nome, other.nome);
 	}
 
 	

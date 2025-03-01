@@ -6,12 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.LSsoftware.ProjetoDecolaTec.Controller.dto.LoginRequest;
 import com.LSsoftware.ProjetoDecolaTec.Controller.dto.LoginResponse;
 import com.LSsoftware.ProjetoDecolaTec.Controller.dto.UsuarioRequest;
 import com.LSsoftware.ProjetoDecolaTec.Controller.dto.UsuarioResponse;
 import com.LSsoftware.ProjetoDecolaTec.Entidades.Usuario;
+import com.LSsoftware.ProjetoDecolaTec.Repository.UsuarioRepository;
 import com.LSsoftware.ProjetoDecolaTec.excessoes.CampoObrigatorioException;
 import com.LSsoftware.ProjetoDecolaTec.excessoes.EntidadeNaoEncontradoException;
 import com.LSsoftware.ProjetoDecolaTec.excessoes.RecursoJaExistenteException;
@@ -28,6 +30,7 @@ public class UsuarioService {
     
     public UsuarioService() {};
 
+    @Transactional
     public UsuarioResponse cadastrarUsuario(UsuarioRequest usuarioRequest) {
 
     	if (usuarioRequest.nome() == null || usuarioRequest.nome().isBlank()) {
@@ -61,6 +64,7 @@ public class UsuarioService {
         return new UsuarioResponse(usuario.getId(),usuario.getNome());
     }
 
+    @Transactional(readOnly = true)
     public LoginResponse logarUsuario(LoginRequest loginRequest) {
 
     	if (loginRequest.nome() == null || loginRequest.nome().isBlank()) {
@@ -84,6 +88,7 @@ public class UsuarioService {
 
     }
 
+    @Transactional
     public void excluirUsuario(Long idUsuario, String senha) {
         if (idUsuario == null) {
             throw new CampoObrigatorioException("id balnco ou nulo, operação negada");
@@ -105,6 +110,7 @@ public class UsuarioService {
 
     }
 
+    @Transactional(readOnly = true)
     public UsuarioResponse consultar( Long idUsuario ) {
     	
     	if(idUsuario == null) throw new CampoObrigatorioException("id do usuário está nulo");
@@ -114,6 +120,8 @@ public class UsuarioService {
 
         return new UsuarioResponse(user.getId(), user.getNome());
     }
+    
+    @Transactional(readOnly = true)
     public Page<UsuarioResponse> listarUsuarios( PageRequest pageRequest) {
     	
         return usuarioRepository.findAll(pageRequest).map((x)-> new UsuarioResponse(x.getId(), x.getNome()));

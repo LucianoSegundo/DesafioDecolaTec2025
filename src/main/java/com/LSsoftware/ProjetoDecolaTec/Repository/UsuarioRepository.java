@@ -1,4 +1,4 @@
-package com.LSsoftware.ProjetoDecolaTec.Service;
+package com.LSsoftware.ProjetoDecolaTec.Repository;
 
 import java.util.Optional;
 

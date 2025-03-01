@@ -28,6 +28,7 @@ import com.LSsoftware.ProjetoDecolaTec.Controller.dto.LoginResponse;
 import com.LSsoftware.ProjetoDecolaTec.Controller.dto.UsuarioRequest;
 import com.LSsoftware.ProjetoDecolaTec.Controller.dto.UsuarioResponse;
 import com.LSsoftware.ProjetoDecolaTec.Entidades.Usuario;
+import com.LSsoftware.ProjetoDecolaTec.Repository.UsuarioRepository;
 import com.LSsoftware.ProjetoDecolaTec.excessoes.CampoObrigatorioException;
 import com.LSsoftware.ProjetoDecolaTec.excessoes.EntidadeNaoEncontradoException;
 import com.LSsoftware.ProjetoDecolaTec.excessoes.RecursoJaExistenteException;
