@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -82,7 +83,7 @@ public class UsuarioController {
 	@ApiResponse(responseCode = "422", description = "operação não permitida devido a campos nulos")
 	@ApiResponse(responseCode = "404", description = "Usuario não encontrado")
 	@GetMapping(value = "/{idUsuario}")
-	public ResponseEntity<UsuarioResponse> consultar(@PathVariable Long idUsuario){
+	public ResponseEntity<UsuarioResponse> consultar(@PathVariable Long idUsuario, JwtAuthenticationToken token){
 	
 		UsuarioResponse response = useService.consultar(idUsuario);
 		
@@ -97,7 +98,7 @@ public class UsuarioController {
 			@RequestParam(value = "pagina", defaultValue = "0") Integer pagina,
 			@RequestParam(value = "linhas", defaultValue = "10") Integer linhas,
 			@RequestParam(value = "ordarPor", defaultValue = "nome") String ordarPor,
-			@RequestParam(value = "ordem", defaultValue = "ASC") String ordem){
+			@RequestParam(value = "ordem", defaultValue = "ASC") String ordem, JwtAuthenticationToken token){
 		
 		PageRequest pagi = PageRequest.of(pagina, linhas, Direction.valueOf(ordem), ordarPor);
 	

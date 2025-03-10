@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -34,6 +35,9 @@ public class PostagemService {
     
     @Autowired
     private UsuarioRepository usuarioRepository;
+    
+    @Autowired
+    private BCryptPasswordEncoder codSenha; 
     
     public PostagemService() {}
 
@@ -77,7 +81,7 @@ public class PostagemService {
         Usuario usuario = usuarioRepository.findById(usuarioId)
                 .orElseThrow(() -> new EntidadeNaoEncontradoException("Usuário não encontrado."));
 
-        if (!usuario.getSenha().equals(senha)) {
+        if (codSenha.matches(senha, usuario.getSenha())) {
             throw new SenhaNaoCorrespondeException("A senha fornecida não corresponde ao usuário.");
         }
 

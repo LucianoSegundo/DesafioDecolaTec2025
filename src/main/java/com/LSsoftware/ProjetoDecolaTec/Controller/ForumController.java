@@ -4,6 +4,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -34,7 +35,7 @@ public class ForumController {
 	@ApiResponse(responseCode = "422", description = "operação não permitida devido a campos nulos")
 	@ApiResponse(responseCode = "400", description = "forum já existe, operação não permitida.")
 	@PostMapping(value="/")
-	public ResponseEntity<ForumResponse> criarForum(@RequestBody ForumRequest request){
+	public ResponseEntity<ForumResponse> criarForum(@RequestBody ForumRequest request, JwtAuthenticationToken token){
 		
 		ForumResponse resposta = forumService.criarForum(request);
 		
@@ -47,7 +48,7 @@ public class ForumController {
 	@ApiResponse(responseCode = "422", description = "operação não permitida devido a campos nulos")
 	@ApiResponse(responseCode = "400", description = "forum já existe, operação não permitida.")
 	@GetMapping(value="/{forumID}")
-	public ResponseEntity<ForumResponse> consultatForum(@PathVariable Long forumID){
+	public ResponseEntity<ForumResponse> consultatForum(@PathVariable Long forumID, JwtAuthenticationToken token){
 		
 		ForumResponse resposta = forumService.consultarForum(forumID);
 		
@@ -62,7 +63,7 @@ public class ForumController {
 			@RequestParam(value = "pagina", defaultValue = "0") Integer pagina,
 			@RequestParam(value = "linhas", defaultValue = "10") Integer linhas,
 			@RequestParam(value = "ordarPor", defaultValue = "nome") String ordarPor,
-			@RequestParam(value = "ordem", defaultValue = "ASC") String ordem){
+			@RequestParam(value = "ordem", defaultValue = "ASC") String ordem, JwtAuthenticationToken token){
 		
 		PageRequest pagi = PageRequest.of(pagina, linhas, Direction.valueOf(ordem), ordarPor);
 	

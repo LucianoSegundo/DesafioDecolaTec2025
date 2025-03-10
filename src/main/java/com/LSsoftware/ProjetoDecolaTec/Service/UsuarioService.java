@@ -1,10 +1,15 @@
 package com.LSsoftware.ProjetoDecolaTec.Service;
 
+import java.time.Instant;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.oauth2.jwt.JwtClaimsSet;
+import org.springframework.security.oauth2.jwt.JwtEncoder;
+import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,8 +30,11 @@ public class UsuarioService {
     @Autowired
     private UsuarioRepository usuarioRepository;
     
-   // @Autowired
-   // private  BCryptPasswordEncoder passwordEncoder
+    @Autowired
+    private BCryptPasswordEncoder codSenha; 
+    
+    @Autowired
+	private JwtEncoder jwtCodificador;
     
     public UsuarioService() {};
 
@@ -56,7 +64,8 @@ public class UsuarioService {
         Usuario usuario = new Usuario();
         usuario.setNome(usuarioRequest.nome());
         usuario.setEmail(usuarioRequest.email());
-        usuario.setSenha(usuarioRequest.senha());
+        String senhaCodificada = codSenha.encode(usuarioRequest.senha());
+        usuario.setSenha(senhaCodificada);
         usuario.setDataNascimento(usuarioRequest.dataNascimento());
 
         usuarioRepository.save(usuario);
@@ -78,9 +87,8 @@ public class UsuarioService {
                 .orElseThrow(() -> new EntidadeNaoEncontradoException( "Usuario" +loginRequest.nome() + "não foi encontrado"));
 
         //lembrar de comparar as senhas criptografadas quando adicionar o spring security
-        
-        if ( loginRequest.senha().equals( usuario.getSenha())) {
-            return new LoginResponse(usuario.getNome(), 2l);
+        if (codSenha.matches(loginRequest.senha(),usuario.getSenha())) {
+            return gerarToken(usuario);
 
         }
         else throw new SenhaNaoCorrespondeException("Senha incorreta");
@@ -101,7 +109,7 @@ public class UsuarioService {
                 .orElseThrow(() -> new EntidadeNaoEncontradoException("ID " + idUsuario));
 
         //lembrar de comparar as senhas criptografadas quando adicionar o spring security
-        if (usuario.getSenha().equals(senha) == true) {
+        if (codSenha.matches(senha, usuario.getSenha())) {
             usuarioRepository.delete(usuario);
             
         }
@@ -129,4 +137,17 @@ public class UsuarioService {
     	
         return usuarioRepository.findAll(pageRequest).map((x)-> new UsuarioResponse(x.getId(), x.getNome()));
     }
+    
+    public  LoginResponse gerarToken(Usuario usuario) {
+
+		Instant now = Instant.now();
+		Long expiresIn = 300L;
+		var scopes = "usuario";
+
+		var claims = JwtClaimsSet.builder().issuer("ProjetoCMA").subject(usuario.getId().toString())
+				.expiresAt(now.plusSeconds(expiresIn)).claim("scape", scopes).build();
+		var jwt = jwtCodificador.encode(JwtEncoderParameters.from(claims)).getTokenValue();
+		return new LoginResponse(jwt, expiresIn);
+
+	}
 }

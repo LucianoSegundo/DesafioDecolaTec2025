@@ -4,6 +4,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.LSsoftware.ProjetoDecolaTec.Controller.dto.PostagemResponse;
+import com.LSsoftware.ProjetoDecolaTec.Service.ExtrarorID;
 import com.LSsoftware.ProjetoDecolaTec.Service.PostagemService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -33,9 +35,9 @@ public class PostagemController {
 	@ApiResponse(responseCode = "200", description = "Postagem criado com sucesso")
 	@ApiResponse(responseCode = "422", description = "operação não permitida devido a campos nulos")
 	@PostMapping(value= "/{idForum}")
-	public ResponseEntity<PostagemResponse> criarPostagem( @RequestBody Long idUsuario, String conteudo, @PathVariable Long idForum) {
+	public ResponseEntity<PostagemResponse> criarPostagem( @RequestBody String conteudo, @PathVariable Long idForum, JwtAuthenticationToken token) {
 		
-		PostagemResponse response = postagemServi.criarPostagem(idUsuario, idForum, conteudo);
+		PostagemResponse response = postagemServi.criarPostagem(ExtrarorID.extrair(token), idForum, conteudo);
 		
 		return ResponseEntity.ok(response);
 	}
@@ -48,9 +50,9 @@ public class PostagemController {
 	@ApiResponse(responseCode = "400", description = "senha incorreta")
 
 	@DeleteMapping(value= "/{postagemId}")
-	public ResponseEntity<Void> excluirPostagem(@PathVariable Long postagemId, @RequestBody Long idUsuario, String senha) {
+	public ResponseEntity<Void> excluirPostagem(@PathVariable Long postagemId, @RequestBody String senha, JwtAuthenticationToken token) {
 		
-		postagemServi.excluirPostagem(idUsuario,postagemId, senha);
+		postagemServi.excluirPostagem(ExtrarorID.extrair(token),postagemId, senha);
 		
 		return ResponseEntity.ok().build();
 	}
@@ -60,7 +62,7 @@ public class PostagemController {
 	@ApiResponse(responseCode = "422", description = "operação não permitida devido a campos nulos")
 	@ApiResponse(responseCode = "404", description = "operação não permitida entidade não encontrada")
 	@GetMapping(value= "/{postagemId}")
-	public ResponseEntity<PostagemResponse> cunsultarPostagem(@PathVariable Long postagemId) {
+	public ResponseEntity<PostagemResponse> cunsultarPostagem(@PathVariable Long postagemId, JwtAuthenticationToken token) {
 		
 		PostagemResponse resposta =	postagemServi.consultarPostagem(postagemId);
 		
@@ -75,7 +77,7 @@ public class PostagemController {
 			@RequestParam(value = "linhas", defaultValue = "10") Integer linhas,
 			@RequestParam(value = "ordarPor", defaultValue = "dataCriacao") String ordarPor,
 			@RequestParam(value = "ordem", defaultValue = "ASC") String ordem,
-			@PathVariable Long forumId){
+			@PathVariable Long forumId, JwtAuthenticationToken token){
 		
 		PageRequest pagi = PageRequest.of(pagina, linhas, Direction.valueOf(ordem), ordarPor);
 	

@@ -5,6 +5,7 @@ import java.time.Instant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,6 +32,9 @@ public class ComentarioService{
     @Autowired
     private PostagemRepository postagemRepository;
 
+    @Autowired
+    private BCryptPasswordEncoder codSenha; 
+    
     @Transactional
     public ComentarioResponse comentar(Long usuarioId, Long postagemId, String conteudo) {
     	 if (postagemId == null ) {
@@ -83,7 +87,7 @@ public class ComentarioService{
         Comentario comentario = comentarioRepository.findByIdAndUsuarioId(comentarioId, usuarioId)
                 .orElseThrow(() -> new EntidadeNaoEncontradoException("Comentário não encontrado com o ID: " + comentarioId +" para o usuario fornecido"));
 
-        if (usuario.getSenha().equals(senha)) {
+        if (codSenha.matches(senha, usuario.getSenha())) {
             comentarioRepository.delete(comentario);
 
         } else throw new SenhaNaoCorrespondeException("senha incorreta");
