@@ -20,6 +20,7 @@ import com.LSsoftware.ProjetoDecolaTec.Controller.dto.LoginRequest;
 import com.LSsoftware.ProjetoDecolaTec.Controller.dto.LoginResponse;
 import com.LSsoftware.ProjetoDecolaTec.Controller.dto.UsuarioRequest;
 import com.LSsoftware.ProjetoDecolaTec.Controller.dto.UsuarioResponse;
+import com.LSsoftware.ProjetoDecolaTec.Service.ExtrarorID;
 import com.LSsoftware.ProjetoDecolaTec.Service.UsuarioService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -70,10 +71,10 @@ public class UsuarioController {
 	@ApiResponse(responseCode = "422", description = "operação não permitida devido a campos nulos")
 	@ApiResponse(responseCode = "404", description = "Usuario não encontrado")
 	@ApiResponse(responseCode = "400", description = "Senha incorreta.")
-	@DeleteMapping(value ="/{idUsuario}")
-	public ResponseEntity<Void> deletarUsuario(@PathVariable Long idUsuario, @RequestBody String Senha){
+	@DeleteMapping(value ="/")
+	public ResponseEntity<Void> deletarUsuario(JwtAuthenticationToken token, @RequestBody String Senha){
 	
-		useService.excluirUsuario(idUsuario, Senha);
+		useService.excluirUsuario(ExtrarorID.extrair(token), Senha);
 		
 		return ResponseEntity.ok().build();
 	}
