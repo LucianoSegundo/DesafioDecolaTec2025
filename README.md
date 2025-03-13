@@ -11,7 +11,7 @@ Esse sistema permite a interação entre os usuários por meio de postagens e co
 
 ## Diagrama de classes
 
-mermaid
+```mermaid
 classDiagram
     class Usuario {
         +int id
@@ -49,7 +49,7 @@ classDiagram
     Postagem "1" -- "0..*" Comentario : tem
     Forum "1" -- "0..*" Postagem : contém
     Usuario "1" -- "0..*" Comentario : comenta
-    
+ ```   
     
 ## Funcionalidades
 
