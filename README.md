@@ -14,34 +14,34 @@ Esse sistema permite a interação entre os usuários por meio de postagens e co
 ```mermaid
 classDiagram
     class Usuario {
-        +int id
-        +String nome
-        +String email
-        +Date dataNascimento
+        -int id
+        -String nome
+        -String email
+        -Date dataNascimento
         
     }
 
     class Postagem {
-        +int id
-        +String conteudo
-        +Date dataCriacao
-        +int usuarioId
+        -int id
+        -String conteudo
+        -Date dataCriacao
+        -int usuarioId
        
     }
 
     class Forum {
-        +int id
-        +String titulo
-        +String descricao
+        -int id
+        -String titulo
+        -String descricao
         
     }
 
     class Comentario {
-        +int id
-        +String conteudo
-        +Date dataCriacao
-        +int usuarioId
-        +int postagemId
+        -int id
+        -String conteudo
+        -Date dataCriacao
+        -int usuarioId
+        -int postagemId
         
     }
 
