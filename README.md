@@ -1,4 +1,4 @@
-# SimpleDateForum
+# SimpleForumFormat
 
 O projeto é um fórum simples onde os usuários podem feito como parte do desafio  de projeto do BootCamp DecolaTec 2025,Em remuso, as operações esperadas do projeto eram:
 
@@ -100,4 +100,4 @@ Foi utilizado um banco de dados **H2** durante o período de desenvolvimento e o
 - PostgreSQL
 
   ## Curiosidade
-   O nome do projeto é um pessimo trocadilho com a classe SimpleDateFormat, porque da escolha? melhor não saber.
+   O nome do projeto é um pessimo trocadilho com a classe SimpleDateFormat, porque da escolha? melhor não saber, vai parecer pior se descobrir.
