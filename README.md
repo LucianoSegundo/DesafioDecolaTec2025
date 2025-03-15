@@ -1,6 +1,6 @@
-# Desafio DecolaTec 2025
+# MiniForum
 
-O projeto é um fórum simples onde os usuários podem:
+O projeto é um fórum simples onde os usuários podem feito como parte do desafio  de projeto do BootCamp DecolaTec 2025. Em remuso, as operações esperadas do projeto eram:
 
 - Se cadastrar no sistema.
 - Criar ou participar de fóruns já existentes.
