@@ -1,6 +1,6 @@
-# MiniForum
+# SimpleDateForum
 
-O projeto é um fórum simples onde os usuários podem feito como parte do desafio  de projeto do BootCamp DecolaTec 2025. Em remuso, as operações esperadas do projeto eram:
+O projeto é um fórum simples onde os usuários podem feito como parte do desafio  de projeto do BootCamp DecolaTec 2025,Em remuso, as operações esperadas do projeto eram:
 
 - Se cadastrar no sistema.
 - Criar ou participar de fóruns já existentes.
@@ -98,3 +98,6 @@ Foi utilizado um banco de dados **H2** durante o período de desenvolvimento e o
 - Spring Data JPA
 - H2 Database
 - PostgreSQL
+
+  ## Curiosidade
+   O nome do projeto é um pessimo trocadilho com a classe SimpleDateFormat, porque da escolha? melhor não saber.
